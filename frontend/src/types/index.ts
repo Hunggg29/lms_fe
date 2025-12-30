@@ -52,6 +52,7 @@ export interface Module {
 }
 
 export interface Course {
+  id?: string;  
   courseId: string;         
   title: string;
   slug: string;

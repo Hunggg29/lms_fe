@@ -63,8 +63,10 @@ export const CourseProgressPage = () => {
     const totalLessons =
         course?.modules?.reduce((sum: number, module: any) => sum + (module.lessons?.length || 0), 0) || 0;
 
-    const completedLessons = progressList.filter((p) => p.progressPercent >= 90).length;
-    const inProgressLessons = progressList.filter((p) => p.progressPercent > 0 && p.progressPercent < 90).length;
+    const completedLessons = progressList.filter((p: Progress) => p.progressPercent >= 90).length;
+    const inProgressLessons = progressList.filter(
+        (p: Progress) => p.progressPercent > 0 && p.progressPercent < 90,
+    ).length;
 
     const overallProgress = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
@@ -238,11 +240,11 @@ export const CourseProgressPage = () => {
                     {course.modules?.map((module: any, moduleIndex: number) => {
                         const moduleLessons = module.lessons || [];
                         const moduleProgress = moduleLessons.map((lesson: any) => {
-                            const progress = progressList.find((p) => p.lessonId === lesson.lessonId);
+                            const progress = progressList.find((p: Progress) => p.lessonId === lesson.lessonId);
                             return progress || null;
                         });
 
-                        const moduleCompleted = moduleProgress.filter((p) => p && p.progressPercent >= 90).length;
+                        const moduleCompleted = moduleProgress.filter((p: Progress | null) => p && p.progressPercent >= 90).length;
 
                         return (
                             <div
@@ -262,7 +264,9 @@ export const CourseProgressPage = () => {
 
                                 <div className="divide-y divide-gray-100">
                                     {moduleLessons.map((lesson: any) => {
-                                        const lessonProgress = progressList.find((p) => p.lessonId === lesson.lessonId);
+                                        const lessonProgress = progressList.find(
+                                            (p: Progress) => p.lessonId === lesson.lessonId,
+                                        );
                                         const percent = lessonProgress?.progressPercent || 0;
                                         const status = getProgressStatus(percent);
                                         const StatusIcon = status.icon;
