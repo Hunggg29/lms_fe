@@ -165,6 +165,14 @@ export const CourseDetailPage = () => {
     const averageRating = reviewsData?.getCourseAverageRating || 0;
     const reviewList = reviewsData?.getReviewsByCourse || [];
 
+    console.log('Reviews:', {
+        courseId,
+        reviewsData,
+        reviewList,
+        reviewListLength: reviewList.length,
+        averageRating,
+    });
+
     const handleEnroll = async () => {
         if (!user) {
             alert('Vui lòng đăng nhập để đăng ký khóa học.');
